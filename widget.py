@@ -1,17 +1,22 @@
 # This Python file uses the following encoding: utf-8
 import os
+import time, threading
+
 from pathlib import Path
 import sys
 
-from PySide2.QtWidgets import QApplication, QWidget, QListView, QPushButton, QLabel, QTableWidget, QTableWidgetItem
+from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtUiTools import QUiLoader
+from zip import *
 
 
 class Widget(QWidget):
-    searchDir = "D:\workUni"
+    searchDir = "/home/miezekatzen/Downloads"
+    extractDir = "/media/share/download/zeitung"
     fileList = []
     extractList = []
+
     def __init__(self):
         super(Widget, self).__init__()
         self.setWindowTitle("HelloWorld")
@@ -19,11 +24,21 @@ class Widget(QWidget):
         self.find = self.findChild(QPushButton, 'find')
         self.extract = self.findChild(QPushButton, 'extract')
         self.label = self.findChild(QLabel, 'label')
-        self.list = self.findChild(QListView, 'listWidget')
         self.table = self.findChild(QTableWidget, 'tableWidget')
+        self.searchPath = self.findChild(QComboBox, 'searchPath')
+        self.extractPath = self.findChild(QComboBox, 'extractPath')
         self.find.clicked.connect(self.findFiles)
         self.extract.clicked.connect(self.extractFiles)
         self.table.cellClicked.connect(self.cell)
+        self.searchPath.currentTextChanged.connect(self.searchChange)
+        self.extractPath.currentTextChanged.connect(self.extractChange)
+
+        self.label.setText("Version 1.0")
+
+        self.table.verticalHeader().setVisible(False)
+        self.table.horizontalHeader().setVisible(False)
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
 
     def load_ui(self):
         loader = QUiLoader()
@@ -38,20 +53,30 @@ class Widget(QWidget):
             if file.endswith(".zip"):
                 qDebug(os.path.join(self.searchDir, file))
                 self.fileList.append(os.path.join(self.searchDir, file))
-        for element in self.fileList:
-            self.list.addItem(element)
         self.table.setColumnCount(1)
         self.table.setRowCount(len(self.fileList))
         for i, element in enumerate(self.fileList):
             self.table.setItem(i,0,QTableWidgetItem(element))
-        self.label.setText(self.fileList.count)
 
     def extractFiles(self):
         for item in self.table.selectedItems():
             print (item.text())
 
     def cell(self, row, column):
-        print(self.table.item(row,column).text())
+        self.label.setText("Working")
+        currentZip = zip(self.table.item(row,column).text(), self.extractDir)
+        extractPassed = currentZip.extract()
+        self.label.setText(extractPassed)
+        threading.Timer(1, self.removeLabel).start()
+
+    def removeLabel(self):
+        self.label.setText('')
+
+    def searchChange(self, strDir):
+        self.searchDir = strDir
+
+    def extractChange(self, strDir):
+        self.extractDir = strDir
 
 
 
