@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>786</width>
-    <height>405</height>
+    <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>30</x>
      <y>10</y>
      <width>701</width>
      <height>371</height>
@@ -37,13 +37,6 @@
      <widget class="QPushButton" name="find">
       <property name="text">
        <string>Find</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="extract">
-      <property name="text">
-       <string>Extract</string>
       </property>
      </widget>
     </item>
@@ -88,29 +81,47 @@
      </widget>
     </item>
     <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QRadioButton" name="zip">
+        <property name="text">
+         <string>Zip-File</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rar">
+        <property name="text">
+         <string>Rar-File</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="browsSearch">
+        <property name="text">
+         <string>SearchFolder</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="browsExtract">
+        <property name="text">
+         <string>ExtractFolder</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <widget class="QLabel" name="label">
       <property name="text">
        <string/>
       </property>
      </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QRadioButton" name="radioButton_2">
-        <property name="text">
-         <string>RadioButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radioButton">
-        <property name="text">
-         <string>RadioButton</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
    </layout>
   </widget>
